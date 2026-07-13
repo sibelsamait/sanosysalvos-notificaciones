@@ -1,10 +1,5 @@
 version: '3.8'
 
-# ============================================================
-# IMPORTANTE: Antes de levantar este compose crea el .env
-# copiando .env.example y completando los valores.
-# ============================================================
-
 services:
 
   # ----------------------------------------------------------
