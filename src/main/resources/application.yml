@@ -1,0 +1,62 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: sanosysalvos-notificaciones
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+  # --- RabbitMQ ---
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 2000
+          max-attempts: 3
+          multiplier: 2.0
+          max-interval: 10000
+        default-requeue-rejected: false
+        acknowledge-mode: auto
+        prefetch: 10
+
+# --- Eureka ---
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+notificaciones:
+  mail:
+    remitente: ${MAIL_REMITENTE:${MAIL_USERNAME}}
+    nombre-app: Sanos y Salvos
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
